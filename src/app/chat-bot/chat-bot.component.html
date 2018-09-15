@@ -1,0 +1,35 @@
+
+<div class="chat-container">
+
+  <div class="header-bar">
+    <mat-toolbar>
+          <span class="spacer"></span>
+          <h1>SENSUBOT</h1>
+          <button mat-icon-button [matMenuTriggerFor]="appMenu">
+            <mat-icon>menu</mat-icon>
+          </button>
+    </mat-toolbar>
+    <mat-menu #appMenu="matMenu">
+      <button mat-menu-item> <mat-icon>account_circle</mat-icon>Organization Login </button>
+      <button mat-menu-item (click)="openWelcomeDialog()"> <mat-icon>info</mat-icon>About </button>
+      <button mat-menu-item (click)="openHelpDialog()"> <mat-icon>help</mat-icon>Help </button>
+    </mat-menu>
+  </div>
+
+  <ol class="contain" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+      <li class = "talk-bubble tri-right round mat-elevation-z5" *ngFor="let message of messages" [ngClass]="{'left-top server': message.isServer, 'right-top user': !message.isServer}">
+          <span [ngClass]="{'text': this.message.isServer, 'userText': !this.message.isServer}" [innerHTML]="this.message.content | linky"></span>
+      </li>
+    </ol>
+
+  <form class="form" (keyup.enter)="sendMessage()">
+    <mat-form-field class="full-width" color="accent">
+        <input matInput placeholder="Type Here" [(ngModel)]="message" [ngModelOptions]="{standalone: true}" autocomplete="off" autofocus>
+    </mat-form-field>
+  </form>
+
+  <button class = "speech" mat-icon-button (click)="activateSpeechSearchMovie(message)"><mat-icon>keyboard_voice</mat-icon></button>
+
+</div>
+
+<router-outlet></router-outlet>
